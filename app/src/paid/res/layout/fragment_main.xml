@@ -15,6 +15,16 @@
         android:layout_height="wrap_content"
         android:text="@string/instructions" />
 
+    <ProgressBar
+        android:id="@+id/progressBarJoker"
+        android:layout_height="75dp"
+        android:layout_width="75dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

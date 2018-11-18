@@ -5,17 +5,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
-import andersonsv.com.br.jokelib.JokeGen;
+import com.udacity.gradle.builditbigger.task.EndpointGCETask;
+import com.udacity.gradle.builditbigger.task.OnTaskCompleted;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnTaskCompleted {
+
+    private ProgressBar mLoadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mLoadingIndicator = findViewById(R.id.progressBarJoker);
     }
 
 
@@ -42,10 +47,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        JokeGen jokeGen = new JokeGen();
-
-        Toast.makeText(this,  jokeGen.getRandomJoke(), Toast.LENGTH_SHORT).show();
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+        new EndpointGCETask(this).execute(this);
     }
 
 
+    @Override
+    public void onTaskCompleted(String response) {
+        mLoadingIndicator.setVisibility(View.INVISIBLE);
+    }
 }
