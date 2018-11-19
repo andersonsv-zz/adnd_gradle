@@ -17,11 +17,11 @@ import andersonsv.com.br.showjokelib.ShowJokeActivity;
 public class EndpointGCETask extends AsyncTask<Context, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
-    private final OnTaskCompleted taskCompleted;
+   // private final OnTaskCompleted taskCompleted;
 
-    public EndpointGCETask(OnTaskCompleted taskCompleted) {
-        this.taskCompleted = taskCompleted;
-    }
+   // public EndpointGCETask(OnTaskCompleted taskCompleted) {
+   //     this.taskCompleted = taskCompleted;
+   // }
 
     @Override
     protected String doInBackground(Context...params) {
@@ -54,9 +54,9 @@ public class EndpointGCETask extends AsyncTask<Context, Void, String> {
     protected void onPostExecute(String result) {
         final Intent intent = new Intent(context, ShowJokeActivity.class);
         intent.putExtra("gce_result",result);
-        if(taskCompleted != null) {
-            taskCompleted.onTaskCompleted(result);
-        }
+        //if(taskCompleted != null) {
+        //    taskCompleted.onTaskCompleted(result);
+        //}
         context.startActivity(intent);
     }
 }

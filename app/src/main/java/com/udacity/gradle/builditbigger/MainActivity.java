@@ -11,7 +11,7 @@ import com.udacity.gradle.builditbigger.task.EndpointGCETask;
 import com.udacity.gradle.builditbigger.task.OnTaskCompleted;
 
 
-public class MainActivity extends AppCompatActivity implements OnTaskCompleted {
+public class MainActivity extends AppCompatActivity {//implements OnTaskCompleted {
 
     private ProgressBar mLoadingIndicator;
 
@@ -48,12 +48,12 @@ public class MainActivity extends AppCompatActivity implements OnTaskCompleted {
 
     public void tellJoke(View view) {
         mLoadingIndicator.setVisibility(View.VISIBLE);
-        new EndpointGCETask(this).execute(this);
+        new EndpointGCETask().execute(this);
     }
 
 
-    @Override
-    public void onTaskCompleted(String response) {
-        mLoadingIndicator.setVisibility(View.INVISIBLE);
-    }
+    //@Override
+    //public void onTaskCompleted(String response) {
+   //     mLoadingIndicator.setVisibility(View.INVISIBLE);
+   // }
 }
