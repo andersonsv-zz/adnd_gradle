@@ -8,10 +8,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.udacity.gradle.builditbigger.task.EndpointGCETask;
-import com.udacity.gradle.builditbigger.task.OnTaskCompleted;
 
 
-public class MainActivity extends AppCompatActivity {//implements OnTaskCompleted {
+public class MainActivity extends AppCompatActivity {
 
     private ProgressBar mLoadingIndicator;
 
@@ -50,10 +49,4 @@ public class MainActivity extends AppCompatActivity {//implements OnTaskComplete
         mLoadingIndicator.setVisibility(View.VISIBLE);
         new EndpointGCETask(this, mLoadingIndicator).execute(this);
     }
-
-
-    //@Override
-    //public void onTaskCompleted(String response) {
-   //     mLoadingIndicator.setVisibility(View.INVISIBLE);
-   // }
 }

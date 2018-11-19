@@ -3,7 +3,7 @@
     package="andersonsv.com.br.showjokelib">
 
     <application>
-        <activity android:name=".ShowJokeActivity"></activity>
+        <activity android:name=".ShowJokeActivity"/>
     </application>
 
 </manifest>
