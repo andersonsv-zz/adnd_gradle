@@ -54,7 +54,9 @@ public class EndpointGCETask extends AsyncTask<Context, Void, String> {
     protected void onPostExecute(String result) {
         final Intent intent = new Intent(context, ShowJokeActivity.class);
         intent.putExtra("gce_result",result);
-        taskCompleted.onTaskCompleted(result);
+        if(taskCompleted != null) {
+            taskCompleted.onTaskCompleted(result);
+        }
         context.startActivity(intent);
     }
 }
