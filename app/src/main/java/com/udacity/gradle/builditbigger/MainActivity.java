@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {//implements OnTaskComplete
 
     public void tellJoke(View view) {
         mLoadingIndicator.setVisibility(View.VISIBLE);
-        new EndpointGCETask().execute(this);
+        new EndpointGCETask(this, mLoadingIndicator).execute(this);
     }
 
 

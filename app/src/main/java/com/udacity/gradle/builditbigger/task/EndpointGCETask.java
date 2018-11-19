@@ -3,6 +3,8 @@ package com.udacity.gradle.builditbigger.task;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -16,12 +18,23 @@ import andersonsv.com.br.showjokelib.ShowJokeActivity;
 
 public class EndpointGCETask extends AsyncTask<Context, Void, String> {
     private static MyApi myApiService = null;
-    private Context context;
-   // private final OnTaskCompleted taskCompleted;
+    private Context mContext;
+    private ProgressBar progressBar;
 
-   // public EndpointGCETask(OnTaskCompleted taskCompleted) {
-   //     this.taskCompleted = taskCompleted;
-   // }
+    public EndpointGCETask(Context context, ProgressBar progressBar)
+    {
+        this.mContext = context;
+        this.progressBar = progressBar;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        if(progressBar!=null)
+            progressBar.setVisibility(View.VISIBLE);
+    }
+
+
 
     @Override
     protected String doInBackground(Context...params) {
@@ -41,7 +54,7 @@ public class EndpointGCETask extends AsyncTask<Context, Void, String> {
             myApiService = builder.build();
         }
 
-        context = params[0];
+        mContext = params[0];
 
         try {
             return myApiService.jokeService().execute().getData();
@@ -52,11 +65,11 @@ public class EndpointGCETask extends AsyncTask<Context, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        final Intent intent = new Intent(context, ShowJokeActivity.class);
-        intent.putExtra("gce_result",result);
-        //if(taskCompleted != null) {
-        //    taskCompleted.onTaskCompleted(result);
-        //}
-        context.startActivity(intent);
+        if(progressBar!=null)
+            progressBar.setVisibility(View.GONE);
+
+        Intent intent = new Intent(mContext, ShowJokeActivity.class);
+        intent.putExtra("gce_result", result);
+        mContext.startActivity(intent);
     }
 }
