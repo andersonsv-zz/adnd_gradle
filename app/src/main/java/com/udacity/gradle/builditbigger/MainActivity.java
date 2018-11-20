@@ -1,13 +1,21 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.udacity.gradle.builditbigger.task.EndpointGCECallback;
 import com.udacity.gradle.builditbigger.task.EndpointGCETask;
+
+import andersonsv.com.br.showjokelib.ShowJokeActivity;
+
+import static andersonsv.com.br.showjokelib.util.ExtraUtil.EXTRA_GCE_RESULT;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,6 +55,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
         mLoadingIndicator.setVisibility(View.VISIBLE);
-        new EndpointGCETask(this, mLoadingIndicator).execute(this);
+        //new EndpointGCETask(this, mLoadingIndicator).execute(this);
+
+        EndpointGCETask endpointGCETask = new EndpointGCETask(this, mLoadingIndicator, new EndpointGCECallback() {
+            @Override
+            public void onSuccess(String result) {
+                Intent intent = new Intent(getApplicationContext(), ShowJokeActivity.class);
+                intent.putExtra(EXTRA_GCE_RESULT, result);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Toast.makeText(getApplicationContext(), "ERROR: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        endpointGCETask.execute();
     }
+
+
 }

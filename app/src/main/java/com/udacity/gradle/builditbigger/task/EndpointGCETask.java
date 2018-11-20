@@ -23,10 +23,14 @@ public class EndpointGCETask extends AsyncTask<Context, Void, String> {
     private Context mContext;
     private ProgressBar progressBar;
 
-    public EndpointGCETask(Context context, ProgressBar progressBar)
+    private EndpointGCECallback<String> mCallBack;
+    public Exception mException;
+
+    public EndpointGCETask(Context context, ProgressBar progressBar, EndpointGCECallback callback)
     {
         this.mContext = context;
         this.progressBar = progressBar;
+        this.mCallBack = callback;
     }
 
     @Override
@@ -54,22 +58,27 @@ public class EndpointGCETask extends AsyncTask<Context, Void, String> {
             myApiService = builder.build();
         }
 
-        mContext = params[0];
+        //mContext = params[0];
 
         try {
             return myApiService.jokeService().execute().getData();
         } catch (IOException e) {
-            return e.getMessage();
+            mException = e;
         }
+        return null;
     }
 
     @Override
     protected void onPostExecute(String result) {
+        if (mCallBack != null) {
+            if (mException == null) {
+                mCallBack.onSuccess(result);
+            } else {
+                mCallBack.onFailure(mException);
+            }
+        }
+
         if(progressBar!=null)
             progressBar.setVisibility(View.GONE);
-
-        Intent intent = new Intent(mContext, ShowJokeActivity.class);
-        intent.putExtra(EXTRA_GCE_RESULT, result);
-        mContext.startActivity(intent);
     }
 }

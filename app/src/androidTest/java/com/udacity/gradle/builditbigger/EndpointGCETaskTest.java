@@ -19,7 +19,7 @@ public class EndpointGCETaskTest {
             new ActivityTestRule<>(MainActivity.class);
     @Test
     public void tellJokeTest() throws Exception {
-        EndpointGCETask endpointGCETask = new EndpointGCETask(mActivityTestRule.getActivity(), null);
+        EndpointGCETask endpointGCETask = new EndpointGCETask(mActivityTestRule.getActivity(), null, null);
         endpointGCETask.execute(mActivityTestRule.getActivity());
 
         String result = endpointGCETask.get();
