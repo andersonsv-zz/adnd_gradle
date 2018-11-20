@@ -16,6 +16,8 @@ import java.io.IOException;
 
 import andersonsv.com.br.showjokelib.ShowJokeActivity;
 
+import static andersonsv.com.br.showjokelib.util.ExtraUtil.EXTRA_GCE_RESULT;
+
 public class EndpointGCETask extends AsyncTask<Context, Void, String> {
     private static MyApi myApiService = null;
     private Context mContext;
@@ -67,7 +69,7 @@ public class EndpointGCETask extends AsyncTask<Context, Void, String> {
             progressBar.setVisibility(View.GONE);
 
         Intent intent = new Intent(mContext, ShowJokeActivity.class);
-        intent.putExtra("gce_result", result);
+        intent.putExtra(EXTRA_GCE_RESULT, result);
         mContext.startActivity(intent);
     }
 }
